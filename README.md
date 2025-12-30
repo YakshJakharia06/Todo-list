@@ -20,9 +20,3 @@ iTask is a sleek, responsive Todo application built with **React** and **Tailwin
 * **Styling:** Tailwind CSS
 * **Icons:** React Icons
 * **Unique IDs:** UUID Library
-
-## 🛠️ Installation & Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
