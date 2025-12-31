@@ -13,7 +13,7 @@ const TodoItem = ({ item, handleCheckBox, handleEdit, handleDelete }) => {
         <div className='flex flex-col gap-1'>
           <div className="flex gap-3">
             <input className='' onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} />
-            <div className={item.isCompleted ? "line-through text-gray-500 wrap-break-word" : "font-medium text-slate-800 w-40 wrap-break-word"}>
+            <div className={item.isCompleted ? "line-through text-gray-500 w-40 md:w-full wrap-break-word" : "font-medium text-slate-800 w-40 md:w-full wrap-break-word"}>
               {item.todo}
             </div>
           </div>
