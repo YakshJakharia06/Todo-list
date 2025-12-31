@@ -13,7 +13,7 @@ const TodoItem = ({ item, handleCheckBox, handleEdit, handleDelete }) => {
         <div className='flex flex-col gap-1'>
           <div className="flex gap-3">
             <input className='' onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} />
-            <div className={item.isCompleted ? "line-through text-gray-500" : "font-medium text-slate-800 w-full"}>
+            <div className={item.isCompleted ? "line-through text-gray-500 wrap-break-word" : "font-medium text-slate-800 w-40 wrap-break-word"}>
               {item.todo}
             </div>
           </div>
@@ -85,7 +85,7 @@ function App() {
     let index = todos.findIndex(item => {
       return item.id === id;
     })
-    
+
     let newTodos = todos.filter(item => {
       return item.id !== id
     });
@@ -134,7 +134,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto my-10 p-5 w-[90%] md:w-[90%] rounded-2xl bg-purple-400 min-h-[80vh]">
+      <div className="container mx-auto my-10 p-5 w-3/4 md:w-[90%] rounded-2xl bg-purple-400 min-h-[80vh]">
         <h2 className='text-xl font-bold mb-4'>Your Agenda</h2>
 
 
@@ -145,9 +145,9 @@ function App() {
 
               <h3 className='text-lg font-bold mb-3 border-b border-purple-800 pb-2 flex justify-between'>
                 <span>{date === "No Date" ? "Unscheduled" : `${date}`}</span>
-                <span className="text-sm bg-purple-700 text-white px-2 rounded-full">
+                {/* <span className="text-sm bg-purple-700 text-white px-2 py-1 rounded-full">
                   {groupedTodos[date].length}
-                </span>
+                </span> */}
               </h3>
 
 
@@ -204,25 +204,26 @@ function App() {
           {todos.length === 0 && <div className='mt-5 w-[80%]'>No todos to display</div>}
           {todos.map(item => {
             //if showfinished is true then all (finished and notfinished) will be shown if showfinished is false then i will only show when item.iscompleted is false
-            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-full my-3 justify-between">
-              <div className='flex gap-2'>
-                <input onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} id="" /> 
-                <div className={item.isCompleted ? "wrap-break-word p-2 w-full h-full text-center" : "w-full h-full wrap-break-word text-center p-2"}>
+            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-full my-3">
+              <div className='flex gap-2 w-full'>
+                <input onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} id="" />
+                <div className={item.isCompleted ? "wrap-break-word p-2 w-fit h-full text-center" : "w-[60%] h-full wrap-break-word p-2"}>
                   {item.todo}
                 </div>
+
+                  {item.dueDate && (
+                    <div className="text-[12px] ml-2 text-violet-900 font-bold bg-violet-100 w-18 p-2 rounded-2xl h-fit">
+                      {item.dueDate}
+                    </div>
+                  )}
+                  <div className="btns h-full p-2 w-12 align-middle">
+                    <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 mb-1 rounded-md text-white cursor-pointer'><CiEdit />
+                    </button>
+                    <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 rounded-md text-white cursor-pointer'><MdDeleteForever /></button>
+                  </div>
+                
               </div>
 
-              {item.dueDate && (
-                <div className="text-[12px] ml-2 text-violet-900 font-bold bg-violet-100 w-20 p-2 rounded-2xl h-fit">
-                  {item.dueDate}
-                </div>
-              )}
-
-              <div className="btns h-full p-2 w-12 align-middle">
-                <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 mb-1 rounded-md text-white cursor-pointer'><CiEdit />
-                </button>
-                <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 rounded-md text-white cursor-pointer'><MdDeleteForever /></button>
-              </div>
             </div>
           })}
         </div>
