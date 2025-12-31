@@ -8,20 +8,22 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const TodoItem = ({ item, handleCheckBox, handleEdit, handleDelete }) => {
   return (
-    <div className="todo flex w-full my-3 justify-between items-center bg-white/50 p-3 rounded-lg shadow-sm">
-      <div className='flex flex-col gap-1'>
-        <div className="flex gap-3">
-          <input onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} />
-          <div className={item.isCompleted ? "line-through text-gray-500" : "font-medium text-slate-800"}>
-            {item.todo}
+    <>
+      <div className="todo flex w-full my-3 justify-between items-center bg-white/50 p-3 rounded-lg shadow-sm">
+        <div className='flex flex-col gap-1'>
+          <div className="flex gap-3">
+            <input className='' onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} />
+            <div className={item.isCompleted ? "line-through text-gray-500" : "font-medium text-slate-800 w-full"}>
+              {item.todo}
+            </div>
           </div>
         </div>
       </div>
-      <div className="btns flex gap-2">
+      <div className="btns flex gap-2 justify-center">
         <button onClick={(e) => handleEdit(e, item.id)} className='p-2 bg-violet-800 text-white rounded-md hover:bg-violet-900'><CiEdit /></button>
         <button onClick={(e) => handleDelete(e, item.id)} className='p-2 bg-violet-800 text-white rounded-md hover:bg-violet-900'><MdDeleteForever /></button>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -83,7 +85,7 @@ function App() {
     let index = todos.findIndex(item => {
       return item.id === id;
     })
-    console.log(index)
+    
     let newTodos = todos.filter(item => {
       return item.id !== id
     });
@@ -132,17 +134,17 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto my-10 p-5 w-3/4 md:w-1/2 rounded-2xl bg-purple-400 min-h-[80vh]">
+      <div className="container mx-auto my-10 p-5 w-[90%] md:w-[90%] rounded-2xl bg-purple-400 min-h-[80vh]">
         <h2 className='text-xl font-bold mb-4'>Your Agenda</h2>
 
-        
+
         <div className="flex overflow-x-auto gap-6 pb-4">
           {sortedDates.map(date => (
-            <div key={date} className="w-75 bg-white/20 p-4 rounded-xl flex flex-col shadow-lg">
+            <div key={date} className="w-full bg-white/20 p-4 rounded-xl flex flex-col shadow-lg">
 
-              
+
               <h3 className='text-lg font-bold mb-3 border-b border-purple-800 pb-2 flex justify-between'>
-                <span>{date === "No Date" ? " Unscheduled" : `${date}`}</span>
+                <span>{date === "No Date" ? "Unscheduled" : `${date}`}</span>
                 <span className="text-sm bg-purple-700 text-white px-2 rounded-full">
                   {groupedTodos[date].length}
                 </span>
@@ -154,14 +156,9 @@ function App() {
 
 
 
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex-1 overflow-y-auto w-full">
                 {groupedTodos[date].map(item => (
-                  <TodoItem
-                    key={item.id}
-                    item={item}
-                    handleCheckBox={handleCheckBox}
-                    handleEdit={handleEdit}
-                    handleDelete={handleDelete}
+                  <TodoItem key={item.id} item={item} handleCheckBox={handleCheckBox} handleEdit={handleEdit} handleDelete={handleDelete}
                   />
                 ))}
               </div>
@@ -207,22 +204,22 @@ function App() {
           {todos.length === 0 && <div className='mt-5 w-[80%]'>No todos to display</div>}
           {todos.map(item => {
             //if showfinished is true then all (finished and notfinished) will be shown if showfinished is false then i will only show when item.iscompleted is false
-            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-3/4 my-3 justify-between">
-              <div className='flex gap-5'>
-                <input onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} id="" />
-                <div className={item.isCompleted ? "" : ""}>
+            return (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-full my-3 justify-between">
+              <div className='flex gap-2'>
+                <input onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} name={item.id} id="" /> 
+                <div className={item.isCompleted ? "wrap-break-word p-2 w-full h-full text-center" : "w-full h-full wrap-break-word text-center p-2"}>
                   {item.todo}
                 </div>
               </div>
 
               {item.dueDate && (
-                <div className="text-[12px] ml-7 text-violet-900 font-bold bg-violet-100 w-fit px-2 rounded-full">
-                   {item.dueDate}
+                <div className="text-[12px] ml-2 text-violet-900 font-bold bg-violet-100 w-20 p-2 rounded-2xl h-fit">
+                  {item.dueDate}
                 </div>
               )}
 
-              <div className="btns flex h-full">
-                <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 rounded-md text-white cursor-pointer'><CiEdit />
+              <div className="btns h-full p-2 w-12 align-middle">
+                <button onClick={(e) => { handleEdit(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 mb-1 rounded-md text-white cursor-pointer'><CiEdit />
                 </button>
                 <button onClick={(e) => { handleDelete(e, item.id) }} className='bg-violet-800 hover:bg-violet-950 mx-1 px-2 py-1 rounded-md text-white cursor-pointer'><MdDeleteForever /></button>
               </div>
